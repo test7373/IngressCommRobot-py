@@ -161,7 +161,7 @@ class Ingress(object):
     def __get_v(self):
 
         # r = self.request('http://127.0.0.1/d.php')
-        r = self.request('https://www.ingress.com/intel')
+        r = self.request('https://intel.ingress.com/intel')
         if r.status_code != 200:
             return False
         # 获取是否需要登陆
@@ -171,7 +171,7 @@ class Ingress(object):
         if info is not None and len(info.groups()) == 1:
             if not self.__login(info.group(1)):
                 return False
-            r = self.request('https://www.ingress.com/intel')
+            r = self.request('https://intel.ingress.com/intel')
             if r.status_code != 200:
                 return False
         # 匹配v
@@ -206,7 +206,7 @@ class Ingress(object):
         _login = bs(_.text, 'lxml')
 
         # 默认跳转地址
-        _JumpUrl = 'https://accounts.google.com/ServiceLogin?continue=https%3A%2F%2Fappengine.google.com%2F_ah%2Fconflogin%3Fcontinue%3Dhttps%3A%2F%2Fwww.ingress.com%2Fintel&rip=1&nojavascript=1&service=ah&ltmpl=gm'
+        _JumpUrl = 'https://accounts.google.com/ServiceLogin?continue=https%3A%2F%2Fappengine.google.com%2F_ah%2Fconflogin%3Fcontinue%3Dhttps%3A%2F%2Fintel.ingress.com%2Fintel&rip=1&nojavascript=1&service=ah&ltmpl=gm'
         for k in _login.select('meta[http-equiv="refresh"]'):
             _Info = re.search(r'(?<=url\=).+',
                               k['content'],  re.M | re.I | re.S)
@@ -364,9 +364,9 @@ class Ingress(object):
     # 获取消息
     def get_msg(self):
         # url = 'http://127.0.0.1/c.php'
-        url = 'https://www.ingress.com/r/getPlexts'
-        header = {'Content-type': 'application/json; charset=UTF-8', 'Origin': 'https://www.ingress.com',
-                  'Referer': 'https://www.ingress.com/intel'}
+        url = 'https://intel.ingress.com/r/getPlexts'
+        header = {'Content-type': 'application/json; charset=UTF-8', 'Origin': 'https://intel.ingress.com',
+                  'Referer': 'https://intel.ingress.com/intel'}
         data = '{"minLatE6":' + str(self.__conf['minLatE6']) + ',"minLngE6":' + str(self.__conf['minLngE6']) + ',"maxLatE6":' + str(self.__conf['maxLatE6']) + ',"maxLngE6":' + str(self.__conf[
             'maxLngE6']) + ',"minTimestampMs":' + str(int(time.time() * 1000 - 60000 * self.__mintime)) + ',"maxTimestampMs":-1,"tab":"faction","ascendingTimestampOrder":true,"v":"' + self.__conf['v'] + '"}'
         r = self.request(url, data.encode('UTF-8'), header)
@@ -380,9 +380,9 @@ class Ingress(object):
             raise TypeError('msg must be a string')
 
         # url = 'http://127.0.0.1/a.php?r'
-        url = 'https://www.ingress.com/r/sendPlext'
-        header = {'Content-type': 'application/json; charset=UTF-8', 'Origin': 'https://www.ingress.com',
-                  'Referer': 'https://www.ingress.com/intel', }
+        url = 'https://intel.ingress.com/r/sendPlext'
+        header = {'Content-type': 'application/json; charset=UTF-8', 'Origin': 'https://intel.ingress.com',
+                  'Referer': 'https://intel.ingress.com/intel', }
         data = '{"message":"' + msg + '","latE6":' + str(self.__conf['latE6']) + ',"lngE6":' + str(
             self.__conf['lngE6']) + ',"tab":"faction","v":"' + self.__conf['v'] + '"}'
 
